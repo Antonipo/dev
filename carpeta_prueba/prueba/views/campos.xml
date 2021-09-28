@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="custom_view_custom">
+        <field name="name">custom_view_custom</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+
+            <field name="payment_term_id" position="after">
+                <group>
+                    <field name="field_many2one"/>
+<!--
+                    <field name="field_one2may"></field>
+
+                    <field></field>
+                      -->
+                </group>
+            </field>
+
+
+        </field>
+    </record>
+</odoo>
