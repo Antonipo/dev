@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id='save_links_actions' model='ir.actions.act_window'>
+        <field name="name">Save Links</field>
+        <field name="res_model">video.user</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem name="Links" id="links_base_menu"/>
+    <menuitem name="videos_saves" id="video_save_menu"
+    parent="links_base_menu" action="save_links_actions"/>
+
+    <record id="links_view_form" model="ir.ui.view">
+        <field name="name">video saves Form</field>
+        <field name="model">video.user</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <group>
+                        <field name="name"/>
+                        <field name="description"/>
+
+                        <field name="username" />
+                        <field name="host" />
+
+                    </group>
+                    <group>
+                        <field name="fecha"/>
+                    </group>
+                </group>
+            </form>
+
+        </field>
+    </record>
+
+    <record id="links_view_tree" model="ir.ui.view">
+        <field name="name">Save Links List</field>
+        <field name="model">video.user</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="username"/>
+                <field name="host"/>
+                <field name="fecha"/>
+            </tree>
+        </field>
+    </record>
+
+
+</odoo>
