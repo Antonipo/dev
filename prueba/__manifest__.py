@@ -1,6 +1,11 @@
 {
     'name': 'My Library',
     'depends': ['base','sale'],
-    'data': ['views/save_links.xml'],
+    'category': 'Library',
+    'data': [
+                'security/groups.xml',
+                'security/ir.model.access.csv',
+                'views/library_book.xml'
+             ],
 
  }
