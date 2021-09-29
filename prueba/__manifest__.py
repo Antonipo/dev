@@ -5,7 +5,8 @@
     'data': [
                 'security/groups.xml',
                 'security/ir.model.access.csv',
-                'views/library_book.xml'
+                'security/security_rules.xml',
+                'views/library_book.xml',
              ],
 
  }

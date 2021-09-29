@@ -20,7 +20,7 @@
         <field name="name">librarians</field>
         <field name="category_id" ref="base.module_category_library"/>
         <field name="implied_ids" eval="[(4,ref('group_library_user'))]"/>
-        <field name="users" eval="[(4,ref('base.user_admin'))]"></field>
+        <field name="users" eval="[(4,ref('base.user_admin'))]"/>
     </record>
 
 </odoo>

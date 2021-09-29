@@ -6,6 +6,7 @@ class LibraryBook(models.Model):
     _name ='library.book'
     name = fields.Char('Title', required=True)
     date_release = fields.Date('Release Date')
+
     #detect duplicate part at server database
     _sql_constraints = [
         ('name_uniq', 'UNIQUE (name)',
@@ -19,6 +20,7 @@ class LibraryBook(models.Model):
         for record in self:
             if record.date_release and record.date_release > fields.Date.today():
                 raise models.ValidationError('Release date must be in the past')
+
     publisher_id = fields.Many2one(
         'res.partner', string='Publisher',
         # optional:
@@ -28,7 +30,13 @@ class LibraryBook(models.Model):
     )
     author_ids = fields.Many2many(
         'res.partner', string='Authors')
+
+    #in this part call a external model
     category_id = fields.Many2one('library.book.category')
+
+    #limiting acess in model
+    is_public = fields.Boolean(groups='prueba.group_library_librarian')
+    private_notes = fields.Text(groups='prueba.group_library_librarian')
 
 class ResPartner(models.Model):
      _inherit = 'res.partner'
