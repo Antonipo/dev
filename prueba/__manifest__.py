@@ -1,6 +1,6 @@
 {
     'name': 'My Library',
-    'depends': ['base_setup','sale'],
+    'depends': ['base','sale'],
     'category': 'Library',
     'data': [
                 'security/groups.xml',
