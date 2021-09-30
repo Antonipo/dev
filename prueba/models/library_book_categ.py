@@ -12,8 +12,10 @@ class BookCategory(models.Model):
  index=True)
  child_ids = fields.One2many(
   'library.book.category', 'parent_id',string='Child Categories')
+ #it's not necessary
  _parent_store = True
  _parent_name = "parent_id"  # optional if field is 'parent_id'
+
  parent_path = fields.Char(index=True)
 
 

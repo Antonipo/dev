@@ -12,11 +12,16 @@
     parent="library_base_menu" action="library_book_action"/>
 
 
+
     <record id="library_book_view_form" model="ir.ui.view">
         <field name="name">Library Book Form</field>
         <field name="model">library.book</field>
         <field name="arch" type="xml">
             <form>
+                <!--all accessed because the group users -->
+                <header groups="prueba.group_library_users">
+                    <button name="report_missing_book" string="Report Missing book" type="object"/>
+                </header>
                 <group>
                     <group>
                         <field name="name"/>
@@ -28,6 +33,7 @@
                         <field name="date_release"/>
                         <field name="is_public"/>
                         <field name="private_notes"/>
+                        <field name="report_missing"/>
                     </group>
                 </group>
             </form>
@@ -41,7 +47,8 @@
         <field name="arch" type="xml">
             <tree>
                 <field name="name"/>
-                <field name="date_release"/>
+                <field name="author_ids"/>
+                <field name="category_id"/>
             </tree>
         </field>
     </record>

@@ -5,7 +5,7 @@ from odoo.exceptions import ValidationError
 class LibraryBook(models.Model):
     _name ='library.book'
     name = fields.Char('Title', required=True)
-    date_release = fields.Date('Release Date')
+    #date_release = fields.Date('Release Date')
 
     #detect duplicate part at server database
     _sql_constraints = [
@@ -34,9 +34,27 @@ class LibraryBook(models.Model):
     #in this part call a external model
     category_id = fields.Many2one('library.book.category')
 
-    #limiting acess in model
+    #limiting acess in model with rol
     is_public = fields.Boolean(groups='prueba.group_library_librarian')
     private_notes = fields.Text(groups='prueba.group_library_librarian')
+
+    #Using security groups to activate features
+    date_release = fields.Date('Release Date',groups='prueba.group_release_dates')
+
+    #only accessed as a superuser
+    report_missing = fields.Text(
+        String = "Book is missing",
+        groups = 'prueba.group_library_librarian',
+    )
+
+    def report_missing_book(self):
+        self.ensure_one()
+        message = "Book is missing (Reported by: %s)" % self.env.user.name
+        self.sudo().write({
+            'report_missing' : message
+        })
+
+
 
 class ResPartner(models.Model):
      _inherit = 'res.partner'
@@ -48,5 +66,6 @@ class ResPartner(models.Model):
      string='Authored Books',
      # relation='library_book_res_partner_rel' #
      )
+
 
 
