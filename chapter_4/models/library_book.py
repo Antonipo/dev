@@ -2,10 +2,14 @@ from odoo import models,fields,api
 from datetime import timedelta
 
 
+
 class LibraryBook(models.Model):
      _name = 'library.book.2'
      name = fields.Char('Title', required=True)
      date_release = fields.Date('Release Date')
+
+     # Using abstract models for reusable model features
+     _inherit = ['base.archive']
 
      #extra model definitions
      _descriptions = 'Library book'
@@ -141,18 +145,6 @@ class LibraryBook(models.Model):
          ])
          return [(x.model ,x.name) for x in models]
 
-    #copy model definition using inheritance
-
-     # prototype inherintance (extension)
-
-
-
-
-
-
-
-
-
 
 
 
@@ -164,7 +156,6 @@ class LibraryBook(models.Model):
 #the model class for the relational fields
 class ResPartner(models.Model):
      _inherit = 'res.partner'
-     _order = 'name'
      published_book_ids = fields.One2many(
          'library.book.2', 'publisher_id',
          string='Published Books')
@@ -184,3 +175,28 @@ class ResPartner(models.Model):
          for r in self:
              r.count_book = len(r.authored_book_ids)
 
+
+#Using delegation inheritance to copy features to another model
+
+class LibraryMember(models.Model):
+    _name = 'library.member'
+    _inherits = {'res.partner' : 'partner_id'}#tthis can be removed by adding to the following command this "delegate = True "
+    partner_id = fields.Many2one(
+        'res.partner',
+        ondelete='cascade'
+    )
+    data_start = fields.Date('Member Since')
+    data_end = fields.Date('Termination Date')
+    member_number = fields.Char()
+    data_of_birth = fields.Date('Data of birth')
+
+#Using abstract models for reusable model features
+class BaseArchive(models.AbstractModel):
+    _name = 'base.archive'
+    _description = 'Abstract Archive'
+
+    active = fields.Boolean(default=True)
+
+    def do_archive(self):
+        for record in self:
+            record.active = not record.active
