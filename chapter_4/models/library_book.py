@@ -1,4 +1,6 @@
-from odoo import models,fields
+from odoo import models,fields,api
+from datetime import timedelta
+
 
 class LibraryBook(models.Model):
      _name = 'library.book.2'
@@ -60,6 +62,85 @@ class LibraryBook(models.Model):
 
      #adding a hierarchy to a model
      category_id = fields.Many2one('library.book.category.2')
+
+     # validations constraint to a model
+
+     # checked at the database level
+     _sql_constraints = [
+         ('name_uniq', 'UNIQUE (name)',
+          'Book title must be unique.'),
+         ('positive_page', 'CHECK(pages>0)',
+          'No of pages must be positive')
+         #another example
+         #('check_credit_debit',
+         # 'CHECK(credit + debit>=0 AND credit * debit=0)',
+         # 'Wrong credit or debit value in accounting entry!'
+         # )
+     ]
+
+     # checked at the server level
+     @api.constrains('date_release')
+     def _check_release_date(self):
+         for record in self:
+             if record.date_release and record.date_release > fields.Date.today():
+                 raise models.ValidationError('Release date must be in the past')
+
+     #Adding computed fields to a model
+     age_days = fields.Float(
+            string = 'Days Since Release',
+            compute = '_compute_age',
+            inverse = '_inverse_age',
+            search = '_search_age',
+            #store = False , optional
+            #compute_sudo = True, optional
+        )
+     @api.depends('date_release')
+     def _compute_age(self):
+         today = fields.Date.today()
+         for book in self:
+             if book.date_release:
+                 delta = today- book.date_release
+                 book.age_days = delta.days
+             else:
+                book.age_days=0
+     def _inverse_age(self):
+         today = fields.Date.today()
+         for book in self.filtered('date_release'):
+             d= today - timedelta(days = book.age_days)
+             book.date_release = d
+     def _search_age(self,operator,value):
+         today = fields.Date.today()
+         value_days = timedelta(days =value)
+         value_date = today - value_days
+         #convert the operator :
+         #book whit age> value have a date < values_date
+         operator_map = {
+             '>' : '<' ,'>=' : '<=',
+             '<' : '>', '<=': '>='
+         }
+         new_op = operator_map.get(operator,operator)
+         return [('date_release',new_op,value_date)]
+
+     #exposing related fields stored in other models
+     publisher_city = fields.Char(
+         'Publisher City',
+         related = 'publisher_id.city',
+         readonly = True
+     )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 #the model class for the relational fields
 class ResPartner(models.Model):
