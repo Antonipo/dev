@@ -9,7 +9,7 @@ class LibraryBook(models.Model):
      date_release = fields.Date('Release Date')
 
      # Using abstract models for reusable model features
-     _inherit = ['base.archive']
+     #_inherit = ['base.archive']
 
      #extra model definitions
      _descriptions = 'Library book'
@@ -161,6 +161,7 @@ class ResPartner(models.Model):
          string='Published Books')
 
      # adding features to a model using inheritances
+
      # class inheritances (extension)
      authored_book_ids = fields.Many2many(
          'library.book.2',
@@ -191,6 +192,9 @@ class LibraryMember(models.Model):
     data_of_birth = fields.Date('Data of birth')
 
 #Using abstract models for reusable model features
+'''
+
+
 class BaseArchive(models.AbstractModel):
     _name = 'base.archive'
     _description = 'Abstract Archive'
@@ -200,3 +204,4 @@ class BaseArchive(models.AbstractModel):
     def do_archive(self):
         for record in self:
             record.active = not record.active
+'''
