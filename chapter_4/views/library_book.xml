@@ -42,6 +42,7 @@
                  <group>
                      <field name="publisher_id"/>
                      <field name="author_ids"/>
+                     <field name="category_id"/>
                      <!--
                      <field name="published_book_ids"/>
                      <field name="authored_book_ids"/>

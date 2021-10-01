@@ -58,6 +58,9 @@ class LibraryBook(models.Model):
      author_ids = fields.Many2many(
          'res.partner', string='Authors')
 
+     #adding a hierarchy to a model
+     category_id = fields.Many2one('library.book.category.2')
+
 #the model class for the relational fields
 class ResPartner(models.Model):
      _inherit = 'res.partner'
