@@ -128,6 +128,25 @@ class LibraryBook(models.Model):
          readonly = True
      )
 
+     #adding dynamic relations using referenc fields
+     ref_doc_id = fields.Reference(
+         selection = '_referencable_models',
+         string = 'Reference Document'
+     )
+
+     @api.model
+     def _referencable_models(self):
+         models = self.env['ir.model'].search([
+             ('field_id.name', '=' , 'message_ids')
+         ])
+         return [(x.model ,x.name) for x in models]
+
+    #copy model definition using inheritance
+
+     # prototype inherintance (extension)
+
+
+
 
 
 
@@ -145,12 +164,23 @@ class LibraryBook(models.Model):
 #the model class for the relational fields
 class ResPartner(models.Model):
      _inherit = 'res.partner'
+     _order = 'name'
      published_book_ids = fields.One2many(
          'library.book.2', 'publisher_id',
          string='Published Books')
+
+     # adding features to a model using inheritances
+     # class inheritances (extension)
      authored_book_ids = fields.Many2many(
          'library.book.2',
          string='Authored Books',
          # relation='library_book_res_partner_rel' # optional
      )
+     count_books = fields.Integer('Number of authored Books',
+                                  compute= '_compute_count_book'
+                                  )
+     @api.depends('authored_book_ids')
+     def _compute_count_book(self):
+         for r in self:
+             r.count_book = len(r.authored_book_ids)
 
