@@ -1,12 +1,14 @@
 from odoo import models,fields,api
 from datetime import timedelta
 
+
+#Using abstract models for reusable model features
 class BaseArchive(models.AbstractModel):
     _name = 'base.archive'
     _description = 'Abstract Archive'
 
     active = fields.Boolean(default=True)
-    prueba_herencia2 = fields.Boolean(default=True)
+
 
     def do_archive(self):
         for record in self:
@@ -201,17 +203,4 @@ class LibraryMember(models.Model):
     member_number = fields.Char()
     data_of_birth = fields.Date('Data of birth')
 
-#Using abstract models for reusable model features
-'''
 
-
-class BaseArchive(models.AbstractModel):
-    _name = 'base.archive'
-    _description = 'Abstract Archive'
-
-    active = fields.Boolean(default=True)
-
-    def do_archive(self):
-        for record in self:
-            record.active = not record.active
-'''
