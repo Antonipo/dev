@@ -1,6 +1,16 @@
 from odoo import models,fields,api
 from datetime import timedelta
 
+class BaseArchive(models.AbstractModel):
+    _name = 'base.archive'
+    _description = 'Abstract Archive'
+
+    active = fields.Boolean(default=True)
+    prueba_herencia2 = fields.Boolean(default=True)
+
+    def do_archive(self):
+        for record in self:
+            record.active = not record.active
 
 
 class LibraryBook(models.Model):
@@ -9,7 +19,7 @@ class LibraryBook(models.Model):
      date_release = fields.Date('Release Date')
 
      # Using abstract models for reusable model features
-     #_inherit = ['base.archive']
+     _inherit = ['base.archive']
 
      #extra model definitions
      _descriptions = 'Library book'

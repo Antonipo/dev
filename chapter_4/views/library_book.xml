@@ -41,13 +41,16 @@
                  </group>
                  <group>
                      <field name="publisher_id"/>
+                     <field name="publisher_id"/>
                      <field name="author_ids"/>
-                     <field name="category_id"/>
+
                      <field name="age_days"/>
                      <!--
                      <field name="published_book_ids"/>
                      <field name="authored_book_ids"/>
                      <field name="count_books"/>
+
+                     <field name="category_id"/>
                     -->
                  </group>
                  <group>
