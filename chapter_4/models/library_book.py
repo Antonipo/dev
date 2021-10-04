@@ -203,4 +203,3 @@ class LibraryMember(models.Model):
     member_number = fields.Char()
     data_of_birth = fields.Date('Data of birth')
 
-
