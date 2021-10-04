@@ -8,4 +8,5 @@ class LibraryBook(models.Model):
      author_ids = fields.Many2many(
          'res.partner',
          string='Authors'
+    #prueba
  )
