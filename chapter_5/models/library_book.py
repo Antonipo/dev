@@ -1,4 +1,5 @@
 import logging
+
 from odoo import models, fields,api
 from odoo.exceptions import UserError
 from odoo.tools.translate import _
@@ -104,6 +105,24 @@ class LibraryBook(models.Model):
          book= self.search(domain)
          logger.info('Books found : %s', book)
          return True
+
+#filter recordset
+     def filter_books(self):
+         all_books = self.search([])
+         filtered_books = self.books_with_multiple_authors(all_books)
+         logger.info('Filtered books : %s',filtered_books)
+
+
+     @api.model
+     def books_with_multiple_authors(self,all_books):
+         def predicate(book):
+             if len(book.author_ids)>1:
+                 return True
+             return False
+         res = all_books.filtered(predicate)
+         print('all book filter: ', res)
+         return res
+
 
 
 
