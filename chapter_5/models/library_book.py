@@ -17,6 +17,31 @@ class LibraryBook(models.Model):
          string='Authors'
         )
      category_id = fields.Many2one('library.book.category.5',string='Category')
+
+     manager_remarks = fields.Text('Manager Remarks')
+
+     @api.model
+     def create(self,values):
+         if not self.user_has_groups('chapter_5.group_librarian_5'):
+             if 'manager_remarks' in values:
+                 raise UserError (
+                     'You are not allowed to modify'
+                     'manager_remarks'
+                 )
+         return super(LibraryBook,self).create(values)
+     def write(self, values):
+         if not self.user_has_groups('chapter_5.group_librarian_5'):
+             if 'manager_remarks' in values:
+                 raise UserError (
+                     'You are not allowed to modify'
+                     'manager_remarks'
+                 )
+         return  super(LibraryBook,self).write(values)
+
+
+
+
+
      #Defining model methods and using API decorators
      state = fields.Selection([
          ('draft', 'Unavailable'),
@@ -122,6 +147,27 @@ class LibraryBook(models.Model):
          res = all_books.filtered(predicate)
          print('all book filter: ', res)
          return res
+
+     # traversing recordset relations
+     def mapped_books(self):
+         all_books = self.search([])
+         books_authors = self.get_author_names(all_books)
+         logger.info('Books Authors :' , books_authors)
+
+     @api.model
+     def get_author_names(self,books):
+         return books.mapped('author_ids.name')
+
+#Sorting recordsets
+     def sorted_books(self):
+         all_books = self.search([])
+         book_sorted = self.sort_books_by_date(all_books)
+         logger.info('Book before sorting : ' , all_books)
+         logger.info('Book after sorting : ' , book_sorted)
+
+     @api.model
+     def sort_books_by_date(self,books):
+         return books.sorted(key='date_release')
 
 
 
