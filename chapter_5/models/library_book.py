@@ -4,7 +4,7 @@ from odoo import models, fields,api
 from odoo.exceptions import UserError
 from odoo.tools.translate import _
 
-logger=logging.getLogger(__name__)
+_logger=logging.getLogger(__name__)
 
 
 class LibraryBook(models.Model):
@@ -12,12 +12,60 @@ class LibraryBook(models.Model):
 
      name = fields.Char('Title', required=True)
      date_release = fields.Date('Release Date')
+
+     category_id = fields.Many2one('library.book.category.5',string='Category')
+
+     pages = fields.Integer('Number of Pages')
+     cost_price = fields.Float('Book Cost')
+
+
+     def grouped_data(self):
+         data = self._get_average_cost()
+         _logger.info("Groupped Data : %s"% data)
+
+
+     @api.model
+     def _get_average_cost(self):
+         grouped_result = self.read_group(
+             [('cost_price', "!=",False)],#domain
+             [('category_id', 'cost_price:avg')],#fields to access
+             [('category_id')],#group_by
+         )
+         return grouped_result
+
+
+
+     #Customizing how records are searched
+     isbn = fields.Char('ISBN')
      author_ids = fields.Many2many(
          'res.partner',
          string='Authors'
-        )
-     category_id = fields.Many2one('library.book.category.5',string='Category')
+     )
 
+     #Customizing how records are searched
+     def  name_get(self):
+         result = []
+         for book in self:
+             authors = book.author_ids.mapped('name')
+             name = '%s (%s)' % (book.name , ', '.join(authors))
+             result.append((book.id,name))
+             return result
+     @api.model
+     def _name_search(self,name ='', args=None , operator = 'ilike',limit = 100 , name_get_uid = None):
+         args = [] if args is None else args.copy()
+         if not (name == '' and operator == 'ilike'):
+             args += [ '|','|',
+                       ('name',operator,name),
+                       ('isbn',operator,name),
+                       ('author_ids.name',operator,name),
+             ]
+         return super(LibraryBook,self)._name_search(
+             name = name ,args = args,operator =operator,
+             limit = limit, name_get_uid=name_get_uid
+         )
+     old_editions = fields.Many2one('library.book.5', string='Old Edition')
+
+#Extending write() and create()
      manager_remarks = fields.Text('Manager Remarks')
 
      @api.model
@@ -128,14 +176,14 @@ class LibraryBook(models.Model):
 
          ]
          book= self.search(domain)
-         logger.info('Books found : %s', book)
+         _logger.info('Books found : %s', book)
          return True
 
 #filter recordset
      def filter_books(self):
          all_books = self.search([])
          filtered_books = self.books_with_multiple_authors(all_books)
-         logger.info('Filtered books : %s',filtered_books)
+         _logger.info('Filtered books : %s',filtered_books)
 
 
      @api.model
@@ -152,7 +200,7 @@ class LibraryBook(models.Model):
      def mapped_books(self):
          all_books = self.search([])
          books_authors = self.get_author_names(all_books)
-         logger.info('Books Authors :' , books_authors)
+         _logger.info('Books Authors :' , books_authors)
 
      @api.model
      def get_author_names(self,books):
@@ -162,8 +210,8 @@ class LibraryBook(models.Model):
      def sorted_books(self):
          all_books = self.search([])
          book_sorted = self.sort_books_by_date(all_books)
-         logger.info('Book before sorting : ' , all_books)
-         logger.info('Book after sorting : ' , book_sorted)
+         _logger.info('Book before sorting : ' , all_books)
+         _logger.info('Book after sorting : ' , book_sorted)
 
      @api.model
      def sort_books_by_date(self,books):

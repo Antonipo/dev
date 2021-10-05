@@ -18,12 +18,15 @@
              <group>
                  <group>
                      <field name="name"/>
-                     <field name="author_ids"
-                    widget="many2many_tags"/>
+                     <field name="author_ids" widget="many2many_tags"/>
+                     <field name="cost_price" />
+                     <field name="category_id"/>
                  </group>
                  <group>
                      <field name="date_release"/>
                      <field name="manager_remarks"/>
+                     <field name="isbn"/>
+                     <field name="old_editions"/>
                  </group>
 
                  <button name="make_available" string="Make Available" type="object"/>
@@ -36,6 +39,8 @@
                 <button name="filter_books" string="Filtered books" type="object"/>
                 <button name="mapped_books" string="Mapped books" type="object"/>
                 <button name="sorted_books" string="Sorting books" type="object"/>
+                <button name="sorted_books" string="Sorting books" type="object"/>
+                 <button name="grouped_data" string="Groupped Data" type="object"/>
 
 
                  <field name="state" widget="statusbar"/>
