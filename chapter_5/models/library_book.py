@@ -28,8 +28,8 @@ class LibraryBook(models.Model):
      def _get_average_cost(self):
          grouped_result = self.read_group(
              [('cost_price', "!=",False)],#domain
-             [('category_id', 'cost_price:avg')],#fields to access
-             [('category_id')],#group_by
+             ['category_id', 'cost_price:avg'],#fields to access
+             ['category_id'],#group_by
          )
          return grouped_result
 
