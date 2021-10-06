@@ -4,13 +4,16 @@ odoo.define('pos_demo.custom', function (require) {
     const PosComponent = require('point_of_sale.PosComponent');
     const ProductScreen = require('point_of_sale.ProductScreen');
     const Registries = require('point_of_sale.Registries');
+    const pos_model = require('point_of_sale.models');
+
+    pos_model.load_fields("product.product", ["standard_price"]);
 
     // Discount Button
     class PosDiscountButton extends PosComponent {
         async onClick() {
             const order = this.env.pos.get_order();
             if (order.selected_orderline) {
-                order.selected_orderline.set_discount(5);
+                order.selected_orderline.set_discount(99);
             }
         }
     }
@@ -59,6 +62,24 @@ odoo.define('pos_demo.custom', function (require) {
     });
     Registries.Component.add(PosLastOrderButton);
 
+    //Modifying existing business logic
+    const UpdatedProductScreen = ProductScreen =>
+        class extends ProductScreen {
+            _setValue(val) {
+                super._setValue(val);
+                const orderline = this.env.pos.get_order().selected_orderline;
+                if (orderline && orderline.product.standard_price) {
+                    var price_unit = orderline.get_unit_price() * (1.0 - (orderline.get_discount() / 100.0));
+                    console.log('esto es el resultado => ' + price_unit)
+                    console.log('esto es el standar precio => ' + orderline.product.standard_price)
+                    if (orderline.product.standard_price > price_unit) {
+                        this.showPopup('ErrorPopup', { title: 'Warning', body: 'Product price set below cost of product.' });
+                    }
+                }
+            }
+        };
+
+    Registries.Component.extend(ProductScreen, UpdatedProductScreen);
 
     return PosDiscountButton;
 
