@@ -6,6 +6,7 @@ odoo.define('pos_demo.custom', function (require) {
     const Registries = require('point_of_sale.Registries');
     const pos_model = require('point_of_sale.models');
 
+
     pos_model.load_fields("product.product", ["standard_price"]);
 
     // Discount Button
@@ -80,6 +81,26 @@ odoo.define('pos_demo.custom', function (require) {
         };
 
     Registries.Component.extend(ProductScreen, UpdatedProductScreen);
+
+
+    var _super_order = pos_model.Order.prototype;
+    pos_model.Order =pos_model.Order.extend({
+        export_for_printing : function (){
+            var result = _super_order.export_for_printing.apply(this,arguments);
+            var savedAmount = this.saved_amount();
+            if (savedAmount>0){
+                result.saved_amount = this.pos.format_currency(savedAmount);
+            }
+            return result;
+        },
+        saved_amount : function (){
+            const order = this.pos.get_order();
+            return _.reduce(order.orderlines.models,function (rem,line){
+                var difference = (line.product.lst_price*line.quantity)-line.get_base_price();
+                return rem + difference ;
+            },0);
+        }
+    });
 
     return PosDiscountButton;
 
