@@ -9,5 +9,9 @@
             'security/groups.xml',
             'security/ir.model.access.csv',
              ],
+    'qweb': [
+            'static/xml/teacher_assets.xml'
+        ]
+
 
  }

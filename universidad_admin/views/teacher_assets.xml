@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="assets" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <link rel="stylesheet" href="/universidad_admin/static/scss/teacher_college.scss"/>
+        </xpath>
+    </template>
+</odoo>
