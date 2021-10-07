@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id='course_college_action' model='ir.actions.act_window'>
+     <field name="name">Course College</field>
+     <field name="res_model">course.college</field>
+     <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem name="Course College" id="college_base_menu" />
+    <menuitem name="Course" id="course_college_menu"
+    parent="college_base_menu" action="course_college_action"/>
+
+    <record id="course_college_view_form" model="ir.ui.view">
+         <field name="name">Course College Form</field>
+         <field name="model">course.college</field>
+         <field name="arch" type="xml">
+         <form>
+             <group>
+                 <group>
+                     <field name="name"/>
+                     <field name="faculty"/>
+                     <field name="teacher"/>
+                 </group>
+             </group>
+         </form>
+         </field>
+    </record>
+
+    <record id="course_college_view_tree" model="ir.ui.view">
+         <field name="name">Course College Tree</field>
+         <field name="model">course.college</field>
+         <field name="arch" type="xml">
+             <tree>
+                 <field name="name"/>
+                 <field name="faculty"/>
+                 <field name="teacher"/>
+             </tree>
+         </field>
+    </record>
+
+</odoo>
