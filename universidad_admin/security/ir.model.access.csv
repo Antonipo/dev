@@ -2,5 +2,7 @@ id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 acl_book,college_admin_default,model_course_college,,1,0,0,0
 acl_book_principal,college_admin_principal,model_course_college,group_college_principal,1,1,1,1
 acl_book_principal_teacher,college_admin_principal,model_college_teacher,group_college_principal,1,1,1,1
+acl_book_principal_student,college_admin_principal,model_college_student,group_college_principal,1,1,1,1
+cl_book_secretary_student,college_admin_secretary,model_college_student,group_college_secretary,1,1,1,0
 cl_book_secretary,college_admin_secretary,model_course_college,group_college_secretary,1,1,1,0
 acl_book_secretary_teacher,college_admin_secretary,model_college_teacher,group_college_secretary,1,1,1,0

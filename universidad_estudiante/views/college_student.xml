@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="college_student_view_form_inh" model="ir.ui.view">
+        <field name="name">College student Form</field>
+        <field name="model">college.student</field>
+        <field name="inherit_id" ref="universidad_admin.college_student_view_form"></field>
+        <field name="arch" type="xml">
+            <field name="date_entry" position="after">
+                <field name="courses"/>
+            </field>
+        </field>
+    </record>
+</odoo>
