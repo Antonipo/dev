@@ -8,7 +8,7 @@
             'views/college_student.xml',
             'security/groups.xml',
             'security/ir.model.access.csv',
-            'static/xml/teacher_assets.xml',
+            'views/teacher_assets.xml',
              ],
     'qweb': [
 
