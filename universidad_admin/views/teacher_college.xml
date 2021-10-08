@@ -24,8 +24,10 @@
                         <field name="time_working"/>
                         <field name="defined_contract"/>
                         <field name="last_modification"/>
-                        <button name="calculate_today" string="today" type="object" event="onClick"/>
+                        <button name="calculate_today" id="button_day" string="today" type="object" />
                     </group>
+
+
                 </group>
             </form>
         </field>
@@ -42,5 +44,7 @@
             </tree>
         </field>
     </record>
+
+
 
 </odoo>

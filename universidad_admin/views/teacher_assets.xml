@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <template id="assets" name="hello_world" inherit_id="web.assets_backend">
+    <template id="assets" name="hello_world" inherit_id="web.assets_frontend">
         <xpath expr="." position="inside">
-            <script type="text/javascript" src="/universidad_admin/static/js/hello_world.js"></script>
+            <script type="text/javascript" src="/universidad_admin/static/js/button_today.js"></script>
             <link rel="stylesheet" href="/universidad_admin/static/scss/teacher_college.scss"/>
         </xpath>
     </template>
 </odoo>
+<!--web.assets_backend
+<script type="text/javascript" src="/universidad_admin/static/js/hello_world.js"></script>-->

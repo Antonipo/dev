@@ -9,10 +9,10 @@
             'views/hello_world.xml',
             'security/groups.xml',
             'security/ir.model.access.csv',
-            'views/teacher_assets.xml',
+            'views/templates.xml',
              ],
     'qweb': [
-            'static/src/xml/hello_world.xml',
+            'xml/hello_world.xml'
         ]
 
 

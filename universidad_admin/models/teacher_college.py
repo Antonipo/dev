@@ -15,7 +15,6 @@ class CollegeTeacher(models.Model):
 
     @api.onchange('contract_date')
     def _get_age(self):
-        print('entrooooo')
         if self.contract_date:
             date1=self.contract_date
             old_year= date1.strftime('%Y')
