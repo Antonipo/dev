@@ -12,6 +12,7 @@ class CollegeTeacher(models.Model):
     last_modification = fields.Date('last Modification',readonly = True)
 
 
+
     @api.onchange('contract_date')
     def _get_age(self):
         print('entrooooo')

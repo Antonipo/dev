@@ -1,0 +1,10 @@
+<odoo>
+  <data>
+    <record id="action_hello_world" model="ir.actions.client">
+      <field name="name">Haz Click</field>
+      <field name="tag">hello_world.action</field>
+    </record>
+
+    <menuitem name="Haz CLick" id="hello_world_menu_root" parent="college_base_menu" action="action_hello_world"/>
+  </data>
+</odoo>
