@@ -1,22 +1,23 @@
 console.log('si leyo el js')
-odoo.define('universidad_admin', function (require) {
+odoo.define('universidad_admin.hello', function (require) {
     "use strict";
-    const core = require('web.core');
-    alert(core._t('Bienvenido'));
+    var AbstractAction = require('web.AbstractAction');
+    var core = require('web.core');
 
+    var menubase = AbstractAction.extend({
+       init: function (){
+           this._super.apply(this,arguments);
+           console.log('si entro a la funcion')
+           window.alert('Bienvenido usuario')
 
+       }
+    });
+
+    core.action_registry.add('hello_world.action',menubase);
+    return menubase;
 
 
 });
 
-/*
 
-odoo.define('hello_world.main', function (require) {
-    "use strict";
-    const AbstractAction = require('web.AbstractAction');
-    const core = require('web.core');
-    const OurAction =AbstractAction.extend({  template: "hello_world.CLientAction"});
-    core.action_registry.add('hello_world.action', OurAction);
-});
-*/
 

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
-    <template id="web_assets_backend_ext" inherit_id="web.assets_backend">
+    <template id="assets_backend" inherit_id="web.assets_backend">
         <xpath expr="." position="inside">
             <script type="text/javascript" src="/universidad_admin/static/js/hello_world.js"></script>
+            <link rel="stylesheet" href="/universidad_admin/static/scss/teacher_college.scss"/>
         </xpath>
     </template>
 </odoo>

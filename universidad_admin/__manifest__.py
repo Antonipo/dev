@@ -11,9 +11,7 @@
             'security/ir.model.access.csv',
             'views/templates.xml',
              ],
-    'qweb': [
-            'xml/hello_world.xml'
-        ]
+    #'qweb': ['xml/hello_world.xml']
 
 
  }
